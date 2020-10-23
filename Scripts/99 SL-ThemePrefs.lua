@@ -200,6 +200,15 @@ SL_CustomPrefs.Get = function()
 			Choices = range(0, 22, 1),
 			Values = range(0, 22, 1),
 		},
+		-- - - - - - - - - - - - - - - - - - - -
+		-- DDROffset allows separate global offsets to be set for DDR and ITG modes.
+		-- In DDR mode, GlobalOffsetSeconds == DDROffset. (See SL-Helpers.lua.)
+		-- In ITG mode, GlobalOffsetSeconds will be this value minus 9 ms.
+		-- If DDROffset doesn't yet exist, the default value is the current GlobalOffsetSeconds.
+		-- To change DDROffset, you'll need to manually edit ThemePrefs.ini.
+		DDROffset = {
+			Default = PREFSMAN:GetPreference("GlobalOffsetSeconds"),
+		},
 	}
 end
 

@@ -458,12 +458,15 @@ SetGameModePreferences = function()
 	-- so turn Decents and WayOffs off now.
 	if SL.Global.GameMode == "Casual" then
 		SL.Global.ActiveModifiers.TimingWindows = {true,true,true,false,false}
-	-- If DDR mode, turn off WayOffs (Boo's)
+	-- If DDR mode, turn off WayOffs (Boos). Also set GlobalOffsetSeconds to DDROffset.
 	elseif SL.Global.GameMode == "DDR" then
 		SL.Global.ActiveModifiers.TimingWindows = {true,true,true,true,false}
-	-- Otherwise, we want all TimingWindows enabled by default.
+		PREFSMAN:SetPreference("GlobalOffsetSeconds",ThemePrefs.Get("DDROffset"))
+	-- In vanilla SL, all other TimingWindows are enabled by default here. However, I prefer Decents and WayOffs off by default, so I've made changes below accordingly.
+	-- We now also need to set GlobalOffsetSeconds to the sum of DDROffset and -0.009 to account for simfiles synced to the +9 ms "ITG standard."
 	else
- 		SL.Global.ActiveModifiers.TimingWindows = {true,true,true,true,true}
+ 		SL.Global.ActiveModifiers.TimingWindows = {true,true,true,false,false}
+		PREFSMAN:SetPreference("GlobalOffsetSeconds",ThemePrefs.Get("DDROffset")-0.009)
 	end
 
 	-- loop through human players and apply whatever mods need to be set now
