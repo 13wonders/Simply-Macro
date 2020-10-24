@@ -1,5 +1,5 @@
 # Simply Macro
-Simply Macro is a fork of Simply Love for SM5 with @MochitheDog's DDR game mode edits and additional edits to compensate for different simfile offset standards.
+Simply Macro is a fork of Simply Love for SM5 with MochitheDog's DDR game mode edits and additional edits to compensate for different simfile offset standards.
 
 ## Why?
 Step artists/simfile creators sync songs differently. Many sync to a null offset, whereas others sync to account for play on an ITG dedicab (+9 ms). Our primary objective here is to allow for play of both kinds of simfiles and songs without worrying about conforming every song to a single offset standard or using multiple StepMania setups. To accomplish this, Simply Macro sets StepMania's global offset each session based on whether you select DDR or ITG as your game mode.
@@ -12,7 +12,7 @@ Step artists/simfile creators sync songs differently. Many sync to a null offset
 5. Profit!
 
 ## Implemented features/changes
-- [x] @MochitheDog's [DDR game mode](https://github.com/MochitheDog/Simply-Love-SM5) for Simply Love
+- [x] [MochitheDog's DDR game mode](https://github.com/MochitheDog/Simply-Love-SM5) for Simply Love
 - [x] Different global offsets for DDR and ITG modes
 - [x] Decents and WayOffs are disabled by default in ITG modes
 - [x] TimingWindowAdd set to zero for DDR
@@ -36,8 +36,10 @@ Note: Life mechanics in DDR mode have *not* been changed from Simply Love's ITG 
 
 <details>
   <summary>Click to see screenshots of DDR game mode.</summary>
-  ![DDR mode select](https://i.imgur.com/u32ZOLV.png)
-  ![DDR mode eval](https://i.imgur.com/ZXs5qSB.png)
+
+![DDR mode select](https://i.imgur.com/u32ZOLV.png)
+
+![DDR mode eval](https://i.imgur.com/ZXs5qSB.png)
 </details>
 
 ## How are the different offsets implemented?
@@ -61,8 +63,9 @@ In the past several years of playing DDR A, I've gotten used to ghost-stepping i
 Unfortunately, you have to use this in English for now.
 
 ## Acknowledgements
-- Special thanks to @quietly-turning for creating, maintaining, and adding new features to Simply Love for SM5, as well as to @MochitheDog for implementing the DDR game mode and sharing it with the world. Honestly, this fork is basically the same as MochitheDog's when I cloned it, plus a few edits for my personal setup.
+- Special thanks to quietly-turning for creating, maintaining, and adding new features to [Simply Love for SM5](https://github.com/quietly-turning/Simply-Love-SM5), as well as to MochitheDog for implementing the DDR game mode and sharing it with the world. Honestly, this fork is basically the same as [MochitheDog's](https://github.com/MochitheDog/Simply-Love-SM5) when I cloned it, plus a few edits for my personal setup.
 - Additional judgment graphics by zenius-i-vanisher user bLOOdSAW/HURG: https://zenius-i-vanisher.com/v5.2/thread?threadid=8936&page=1
 
 ## Finally...
-This fork is primarily meant to be useful for myself. Still, as I continue working on this, I'm open to ideas, suggestions, bug reports, or anything, really. And please forgive any issues. This is the first time I've used git or GitHub, the first time I've made any edit to a StepMania theme, and the first time I've done anything in Lua. In any case, I hope this is useful for some of you. Thanks for checking this out. -@13wonders (*last updated 10/23/2020*)
+This fork is primarily meant to be useful for myself. Still, as I continue working on this, I'm open to ideas, suggestions, bug reports, or anything, really. And please forgive any issues. This is the first time I've used git or GitHub, the first time I've made any edit to a StepMania theme, and the first time I've done anything in Lua. In any case, I hope this is useful for some of you. Thanks for checking this out, and stay cool!
+—13wonders (*last updated 10/23/2020*)
