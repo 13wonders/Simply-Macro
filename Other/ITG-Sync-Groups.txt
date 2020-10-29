@@ -1,0 +1,30 @@
+# ITG Group List -- for setting GlobalOffsetSeconds properly per song group
+# Obviously subject to corrections; users should edit for personal use.
+# Songs in groups below should be synced to +9 ms for ITG.
+
+Atomic Battery Pack
+In The Groove
+In The Groove 2
+In The Groove 3
+In The Groove Rebirth +
+jAAAmes Originals
+Koreyja
+Koreyja 2
+Mootz Mix 4
+Mudkyp 7th Gen
+Mudkyp Korea
+Mudkyp Korea 2
+Mute Sims 1
+Mute Sims 2
+Mute Sims 3
+Mute Sims 4
+Mute Sims 5
+Mute Sims 6
+Mute Sims 7
+Mute Sims 8
+Mute Sims 9
+NiMH Battery Pack
+Notice Me Benpai
+Notice Me Benpai 2
+SOWNDS
+The Legend of Zim 4

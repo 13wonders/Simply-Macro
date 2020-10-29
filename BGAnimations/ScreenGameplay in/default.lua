@@ -18,6 +18,7 @@ else
 	text = THEME:GetString("Stage", "Event")
 end
 
+ITGGroupCheck() -- see ../Scripts/MacroHelpers.lua
 InitializeMeasureCounterAndModsLevel(SongNumberInCourse)
 
 -------------------------------------------------------------------------
