@@ -1,5 +1,8 @@
 local TextColor = (ThemePrefs.Get("RainbowMode") and (not HolidayCheer()) and Color.Black) or Color.White
 
+-- randomflip is for random song selection if Macro is set
+songrandomflip = math.random(99)
+
 -- generate a string like "7741 songs in 69 groups, 10 courses"
 local SongStats = ("%i %s %i %s, %i %s"):format(
 	SONGMAN:GetNumSongs(),
@@ -39,13 +42,7 @@ local sl_version = GetThemeVersion()
 -- was built to potentially help non-technical cabinet owners submit bug reports.
 if ProductVersion():find("git") then
 	local date = VersionDate()
-	local year = date:sub(1,4)
-	local month = date:sub(5,6)
-	if month:sub(1,1) == "0" then month = month:gsub("0", "") end
-	month = THEME:GetString("Months", "Month"..month)
-	local day = date:sub(7,8)
-
-	sm_version = ("%s, Built %s %s %s"):format(sm_version, day, month, year)
+	sm_version = (sm_version..", built "..date)
 end
 
 -- - - - - - - - - - - - - - - - - - - - -
@@ -67,22 +64,60 @@ local af = Def.ActorFrame{
 	OffCommand=function(self) self:linear(0.5):diffusealpha(0) end,
 }
 
--- decorative arrows
-af[#af+1] = LoadActor(THEME:GetPathG("", "_logos/" .. game))..{
-	InitCommand=function(self)
-		self:y(-16):zoom( game=="pump" and 0.2 or 0.205 )
-	end
-}
+-- default SL values for the logo, arrows, etc.
+local logo_x = 2
+local logo_y = 0
+local logo_zoom = 0.7
+local logo_shadow = 0.75
+local arrows_y = -16
+local arrows_zoom = (game=="pump" and 0.2 or 0.205)
+local versiontext_y = -120
+local holiday_zoom = 0.225
+local holiday_x = 130
+local holiday_y = -110
 
--- SIMPLY [something]
+-- if visual theme is Macro, change those values.
+if GetThemePref("VisualTheme") == "Macro" then
+	logo_x = 0
+	logo_y = -55
+	logo_zoom = 0.7
+	logo_shadow = 0
+	arrows_y = -42
+	arrows_zoom = 0.14
+	versiontext_y = -210
+	holiday_zoom = 0.12
+	holiday_x = 108
+	holiday_y = -178
+end
+
+-- time to draw things!
+-- a. logo
 af[#af+1] = LoadActor(THEME:GetPathG("", "_VisualStyles/"..style.."/"..image.." (doubleres).png"))..{
-	InitCommand=function(self) self:x(2):zoom(0.7):shadowlength(0.75) end,
-	OffCommand=function(self) self:linear(0.5):shadowlength(0) end
+	InitCommand=function(self) self:x(logo_x):y(logo_y):zoom(logo_zoom):shadowlength(logo_shadow) end,
+	OffCommand=function(self) self:linear(0.5) end
 }
 
--- SM version, SL version, song stats
+-- b. arrows -- with a diffuse effect if we're in rainbow mode and Macro style
+if (ThemePrefs.Get("RainbowMode") and (GetThemePref("VisualTheme") == "Macro")) then
+	af[#af+1] = LoadActor(THEME:GetPathG("", "_logos/" .. game))..{
+		InitCommand=function(self)
+			self:x(0):y(arrows_y):zoom(arrows_zoom)
+			self:diffuseshift()
+			self:effectcolor1(color("#000000"))
+			self:effectperiod(15)
+		end
+	 }
+else
+	af[#af+1] = LoadActor(THEME:GetPathG("", "_logos/" .. game))..{
+		InitCommand=function(self)
+			self:x(0):y(arrows_y):zoom(arrows_zoom)
+		end
+	}
+end
+
+-- c. SM version, SL version, song stats
 af[#af+1] = Def.ActorFrame{
-	InitCommand=function(self) self:zoom(0.8):y(-120):diffusealpha(0) end,
+	InitCommand=function(self) self:zoom(0.8):y(versiontext_y):diffusealpha(0) end,
 	OnCommand=function(self) self:sleep(0.2):linear(0.4):diffusealpha(1) end,
 
 	LoadFont("Common Normal")..{
@@ -95,13 +130,14 @@ af[#af+1] = Def.ActorFrame{
 	}
 }
 
--- the best way to spread holiday cheer is singing loud for all to hear
+-- d. the best way to spread holiday cheer is singing loud for all to hear
 if HolidayCheer() then
 	af[#af+1] = Def.Sprite{
 		Texture=THEME:GetPathB("ScreenTitleMenu", "underlay/hat.png"),
-		InitCommand=function(self) self:zoom(0.225):xy( 130, -self:GetHeight()/2 ):rotationz(15):queuecommand("Drop") end,
-		DropCommand=function(self) self:decelerate(1.333):y(-110) end,
+		InitCommand=function(self) self:zoom(holiday_zoom):xy(holiday_x, -self:GetHeight()/2 ):rotationz(15):queuecommand("Drop") end,
+		DropCommand=function(self) self:decelerate(1.333):y(holiday_y) end,
 	}
 end
+
 
 return af

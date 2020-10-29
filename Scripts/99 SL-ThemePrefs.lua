@@ -73,13 +73,13 @@ SL_CustomPrefs.Get = function()
 		},
 		VisualTheme =
 		{
-			Default = "Hearts",
+			Default = "Macro",
 			 -- emojis are our lingua franca for the 21st century
-			Choices = { "♡", "↖", "🐻", "🦆", "😺", "🎃", "🌈", "⭐", "🤔" },
-			Values  = { "Hearts", "Arrows", "Bears", "Ducks", "Cats", "Spooky", "Gay", "Stars", "Thonk" },
+			Choices = { "♡", "↖", "🐻", "🦆", "😺", "🎃", "🌈", "⭐", "🤔", "マ" },
+			Values  = { "Hearts", "Arrows", "Bears", "Ducks", "Cats", "Spooky", "Gay", "Stars", "Thonk", "Macro" },
 		},
 		RainbowMode = {
-			Default = false,
+			Default = true,
 			Choices = {
 				THEME:GetString("ThemePrefs", "On"),
 				THEME:GetString("ThemePrefs", "Off")

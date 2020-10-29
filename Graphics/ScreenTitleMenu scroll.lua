@@ -7,7 +7,8 @@ t[#t+1] = LoadFont("Common Bold")..{
 	Name="Choice"..index,
 	Text=THEME:GetString( 'ScreenTitleMenu', Var("GameCommand"):GetText() ),
 
-	InitCommand=function(self) self:shadowlength(0.5) end,
+--	InitCommand=function(self) self:shadowlength(0.5) end,
+	InitCommand=function(self) end,
 	OnCommand=function(self) self:diffusealpha(0):sleep(index*0.075):linear(0.2):diffusealpha(1) end,
 	OffCommand=function(self) self:sleep(index*0.075):linear(0.18):diffusealpha(0) end,
 
