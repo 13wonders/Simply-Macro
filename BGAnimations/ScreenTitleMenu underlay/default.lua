@@ -42,7 +42,7 @@ local sl_version = GetThemeVersion()
 -- was built to potentially help non-technical cabinet owners submit bug reports.
 if ProductVersion():find("git") then
 	local date = VersionDate()
-	sm_version = (sm_version..", built "..date)
+	sm_version = (sm_version.." built "..date)
 end
 
 -- - - - - - - - - - - - - - - - - - - - -
@@ -121,7 +121,7 @@ af[#af+1] = Def.ActorFrame{
 	OnCommand=function(self) self:sleep(0.2):linear(0.4):diffusealpha(1) end,
 
 	LoadFont("Common Normal")..{
-		Text=sm_version .. "       " .. sl_name .. (sl_version and (" v" .. sl_version) or ""),
+		Text=sm_version .. "       " .. sl_name .. (sl_version or ""),
 		InitCommand=function(self) self:y(-20):diffuse(TextColor) end,
 	},
 	LoadFont("Common Normal")..{

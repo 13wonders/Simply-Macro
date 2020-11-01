@@ -62,15 +62,16 @@ local groups = GetGroups()
 -- end
 
 -- The following function checks whether the current song's group is NOT in ITG-Sync-Groups.txt.
--- If it is NOT "ITG," ITGGroupCheck() will set GlobalOffsetSeconds as DDROffset.
--- Otherwise, it will set GlobalOffsetSeconds as DDROffset minus 0.009. (See 99 SL-ThemePrefs.lua.)
+-- If it is NOT "ITG," ITGGroupCheck() will set GlobalOffsetSeconds as DDROffset, divided by 1000, because DDROffset is in milliseconds, whereas GlobalOffsetSeconds is in seconds.
+-- Otherwise, it will set GlobalOffsetSeconds as DDROffset (again, divided by 1000) minus 0.009. (See 99 SL-ThemePrefs.lua.)
 
 ITGGroupCheck = function()
+	local DDROffsetSeconds = GetThemePref('DDROffset')/1000
   if not FindInTable(GAMESTATE:GetCurrentSong():GetGroupName(), groups) then
-    PREFSMAN:SetPreference('GlobalOffsetSeconds',GetThemePref('DDROffset'))
---    SM(GAMESTATE:GetCurrentSong():GetGroupName().." is the current group. GlobalOffsetSeconds is DDROffset, which is "..PREFSMAN:GetPreference('GlobalOffsetSeconds'))
+    PREFSMAN:SetPreference('GlobalOffsetSeconds',DDROffsetSeconds)
+--	SM(GAMESTATE:GetCurrentSong():GetGroupName().." is the current group. GlobalOffsetSeconds is DDROffsetSeconds, which is "..DDROffsetSeconds)
   else
-    PREFSMAN:SetPreference('GlobalOffsetSeconds',GetThemePref('DDROffset')-0.009)
---   SM(GAMESTATE:GetCurrentSong():GetGroupName().." is the current group. GlobalOffsetSeconds is "..GetThemePref('DDROffset').." minus 0.009, which is "..PREFSMAN:GetPreference('GlobalOffsetSeconds'))
+    PREFSMAN:SetPreference('GlobalOffsetSeconds',DDROffsetSeconds-0.009)
+--	SM(GAMESTATE:GetCurrentSong():GetGroupName().." is the current group. GlobalOffsetSeconds is "..DDROffsetSeconds.." minus 0.009, which is "..PREFSMAN:GetPreference('GlobalOffsetSeconds'))
   end
 end

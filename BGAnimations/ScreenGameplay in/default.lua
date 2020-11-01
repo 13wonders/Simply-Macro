@@ -18,7 +18,11 @@ else
 	text = THEME:GetString("Stage", "Event")
 end
 
-ITGGroupCheck() -- see ../Scripts/MacroHelpers.lua
+-- adjust the global offset if UseDDROffset is enabled
+if GetThemePref("UseDDROffset") == true then
+	ITGGroupCheck() -- see ../Scripts/MacroHelpers.lua
+end
+
 InitializeMeasureCounterAndModsLevel(SongNumberInCourse)
 
 -------------------------------------------------------------------------

@@ -200,21 +200,47 @@ SL_CustomPrefs.Get = function()
 			Choices = range(0, 22, 1),
 			Values = range(0, 22, 1),
 		},
+
+		-- - - - - - - - - - - - - - - - - - - -
+		-- Simply Macro prefs
+		-- - - - - - - - - - - - - - - - - - - -
+		-- Enable or disable use of DDROffset (see below).
+		UseDDROffset = {
+			Default = false,
+			Choices = { THEME:GetString("ThemePrefs","Yes"), THEME:GetString("ThemePrefs", "No") },
+			Values 	= { true, false }
+		},
 		-- - - - - - - - - - - - - - - - - - - -
 		-- DDROffset allows separate global offsets to be set for DDR and ITG modes.
-		-- If DDROffset doesn't yet exist, the default value is the current GlobalOffsetSeconds.
-		-- To change DDROffset, you'll need to manually edit ThemePrefs.ini.
-		-- Set DDROffset to what GlobalOffsetSeconds should be for songs synced to a null global.
+		-- If DDROffset doesn't yet exist, the default value is the current GlobalOffsetSeconds times 1000.
+		-- DDROffset is in milliseconds, whereas GlobalOffsetSeconds is in seconds.
+		-- Set DDROffset to what GlobalOffsetSeconds should be, times 1000, for songs synced to a null global.
+		-- DDROffset must be between -500 and 500 ms (i.e., between -0.5 and 0.5 seconds).
 		-- Make sure ../Other/ITG-Sync-Groups.txt contains all your groups that are NOT synced to a null global (i.e., are synced to ITG +9 ms).
 		DDROffset = {
-			Default = PREFSMAN:GetPreference("GlobalOffsetSeconds"),
-			Choices = range(-1, 1, 0.0001),
-			Values = range(-1, 1, 0.0001)
+			Default = round(PREFSMAN:GetPreference("GlobalOffsetSeconds")*1000,0),
+			Choices = range(-500, 500, 1),
+			Values = range(-500, 500, 1)
 		},
+		-- - - - - - - - - - - - - - - - - - - -
+		-- Enable or disable the GrooveStats QR eval pane
+		ShowGrooveStatsPane = {
+			Default = false,
+			Choices = { THEME:GetString("ThemePrefs","On"), THEME:GetString("ThemePrefs", "Off") },
+			Values 	= { true, false }
+		},
+		-- - - - - - - - - - - - - - - - - - - -
+		-- Enable or disable judgments showing under arrows
+		JudgmentsUnderArrows = {
+			Default = false,
+			Choices = { THEME:GetString("ThemePrefs","On"), THEME:GetString("ThemePrefs", "Off") },
+			Values 	= { true, false }
+		}
+
 	}
 end
 
--- rounding function for DDROffset validation:
+-- rounding function for DDROffset:
 local function round(num, numDecimalPlaces)
   local mult = 10^(numDecimalPlaces or 0)
   return math.floor(num * mult + 0.5) / mult
@@ -237,24 +263,7 @@ SL_CustomPrefs.Validate = function()
 				or not FindInTable(v, (sl_prefs[k].Values or sl_prefs[k].Choices))
 				then
 					-- overwrite the user's erroneous setting with the default value
-					-- for non-DDROffset prefs:
-					if k ~= "DDROffset" then
 						ThemePrefs.Set(k, sl_prefs[k].Default)
-					-- the following thus applies for DDROffset only:
-					-- just check if it's a number and set a numeric offset if not
-					elseif type(v) ~= "number" then
-						ThemePrefs.Set(k, round(PREFSMAN:GetPreference("GlobalOffsetSeconds"),4))
---						SM("DDROffset is not a valid number!")
-					-- if it it is a number, then round it? currently this would run every time if DDROffset is a valid number.
-					-- I'm not completely sure why this is the case, so let's just not round more than necessary for now.
---				else
---						local roundedoffset = round(v, 4)
---						SM("Rounding DDROffset to the nearest tenth of a millisecond")
---						ThemePrefs.Set(k, roundedoffset)
-					-- note that we don't throw out numbers that fall outside of the defined DDROffset range
-					-- maybe this should change?
-					end
-
 				end
 
 			-- It's possible a setting exists in the ThemePrefs.ini file, but does not exist

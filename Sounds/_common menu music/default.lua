@@ -8,6 +8,7 @@ local songs = {
 	Gay    = "Mystical Wheelbarrow Journey",
 	Stars  = "Shooting Star - faux VRC6 remix",
 	Thonk  = "Da Box of Kardboard Too (feat Naoki vs ZigZag) - TaroNuke Remix",
+	Macro = "ibiza 2002"
 }
 
 -- retrieve the current VisualTheme from the ThemePrefs system

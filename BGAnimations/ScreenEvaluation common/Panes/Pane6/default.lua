@@ -1,3 +1,8 @@
+-- Check to see if this pane is enabled; skip this pane if it is not
+if GetThemePref("ShowGrooveStatsPane") == false then
+	do return end
+end
+
 -- Pane6 displays QR codes for uploading scores to groovestats.com
 
 local player, side = unpack(...)
