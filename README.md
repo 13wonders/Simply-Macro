@@ -22,14 +22,14 @@ Step artists/simfile creators sync songs differently. Many sync to a null offset
 2. Install Simply Macro by dropping the folder in [your SM folder]/Themes/
 3. Edit Simply-Macro/Other/ITG-Sync-Groups.txt to include song groups that are ITG-synced, while excluding any song groups that are instead synced to a null offset
 4. Switch the game's active theme to Simply Macro
-5. Enable the "DDR Offset" setting in "Simply Macro Options" in-game if that's what you're here for.
+5. Enable the "DDR Offset" setting in "Simply Macro Options" in-game if that's what you're here for
 5. ???
 6. Profit!
 
 ## Implemented features/changes
 - [x] Different global offsets for "ITG" groups vs. non-"ITG" groups
 - [x] DDR Offset is adjustable in-game (and can also be disabled) in "Simply Macro Options"
-- [x] Decents and WayOffs are disabled by default in ITG modes
+- [x] Enable/disable Decents and WayOffs by default (disabled by default)
 - [x] [MochitheDog's DDR game mode](https://github.com/MochitheDog/Simply-Love-SM5) for Simply Love
 - [x] Enable/disable showing judgments under, rather than above, arrows
 - [x] Enable/disable the GrooveStats QR code pane shown on the evaluation screen
@@ -59,7 +59,7 @@ You may thus want to make note of any AutoSync-suggested change to manually edit
 All of this can be a bit tricky, so I highly recommend figuring out what your DDROffset (i.e., GlobalOffsetSeconds for a null offset-synced song) should be before using this theme for the first time. And if you want to switch back to using vanilla Simply Love or another theme as your "daily driver," make sure that your GlobalOffsetSeconds is properly set when you do so.
 
 ## Why did you disable Decents and WayOffs by default?
-In the past several years of playing DDR A, I've gotten used to ghost-stepping in a way that often triggers Decents and WayOffs on ITG, so I now almost always turn off "The Boys." I find the game much more enjoyable without them. Vanilla Simply Love resets the relevant setting every time you start a new game session, and I would prefer not having to do that. Thus, I've disabled them by default.
+In the past several years of playing DDR A, I've gotten used to ghost-stepping in a way that often triggers Decents and WayOffs on ITG, so I now almost always turn off "The Boys." I find the game much more enjoyable without them. Vanilla Simply Love resets the relevant setting every time you start a new game session, and I would prefer not having to do that. Thus, I've disabled them by default, although I've now also included an option to re-enable them by default.
 
 ## What do you get with DDR game mode?
 - Selectable DDR mode at game start enables DDR-approximate timing windows as follows (in seconds):

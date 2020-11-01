@@ -461,9 +461,16 @@ SetGameModePreferences = function()
 	-- If DDR mode, turn off WayOffs (Boos).
 	elseif SL.Global.GameMode == "DDR" then
 		SL.Global.ActiveModifiers.TimingWindows = {true,true,true,true,false}
-	-- In vanilla SL, other game modes have all TimingWindows enabled by default here. However, I prefer Decents and WayOffs off by default, so I've made changes below accordingly.
-	else
- 		SL.Global.ActiveModifiers.TimingWindows = {true,true,true,false,false}
+	-- In vanilla SL, other game modes have all TimingWindows enabled by default here.
+	-- Here, if the user has set Decents and WayOffs off by default, then...
+	elseif GetThemePref("DecentsWayOffsDefault") == false then
+		if SL.Global.GameMode == "ITG" then -- turn off Decents and WayOffs for ITG
+			SL.Global.ActiveModifiers.TimingWindows = {true,true,true,false,false}
+		else -- turn off just Decents for FA+ because there are no WayOffs in FA+
+			SL.Global.ActiveModifiers.TimingWindows = {true,true,true,true,false}
+		end
+	else -- if the user has Decents and WayOffs on by default...
+		SL.Global.ActiveModifiers.TimingWindows = {true,true,true,true,true}
 	end
 
 	-- loop through human players and apply whatever mods need to be set now

@@ -223,6 +223,13 @@ SL_CustomPrefs.Get = function()
 			Values = range(-500, 500, 1)
 		},
 		-- - - - - - - - - - - - - - - - - - - -
+		-- Enable or disable Decents and WayOffs by default for ITG/FA+
+		DecentsWayOffsDefault = {
+			Default = false,
+			Choices = { THEME:GetString("ThemePrefs","On"), THEME:GetString("ThemePrefs", "Off") },
+			Values 	= { true, false }
+		},
+		-- - - - - - - - - - - - - - - - - - - -
 		-- Enable or disable the GrooveStats QR eval pane
 		ShowGrooveStatsPane = {
 			Default = false,
