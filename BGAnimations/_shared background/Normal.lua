@@ -7,6 +7,7 @@ local file = ...
 local strobescreens = {"ScreenAfterSelectProfile","ScreenSelectPlayMode","ScreenSelectPlayMode2","ScreenSelectStyle","ScreenSelectColor"}
 local delay = 0.214285 -- (60 seconds/140 bpm)/2 = seconds per half-beat at 140bpm
 local counter = 1
+local speedswitch = false
 
 local anim_data = {
 	color_add = {0,1,1,0,0,0,1,1,1,1},
@@ -36,11 +37,14 @@ local t = Def.ActorFrame {
 	-- Macro loop command
 	LoopCommand=function(self)
 		if (GetThemePref("VisualTheme") == "Macro") and (FindInTable(SCREENMAN:GetTopScreen():GetName(), strobescreens)) then
+			speedswitch = true
 			if counter == 0 then counter = 1 else counter = 0 end
-			self:queuecommand("UpdateSpeed")
+		else
+			speedswitch = false
 		end
-		self:sleep(delay):queuecommand("Loop")
+		self:queuecommand("UpdateSpeed"):sleep(delay):queuecommand("Loop")
 	end
+
 
 }
 
@@ -64,7 +68,7 @@ for i=1,10 do
 
 		-- Macro update command
 		UpdateSpeedCommand=function(self)
-			if counter == 0 then
+			if ((speedswitch == true) and (counter == 0)) then
 				self:texcoordvelocity(anim_data.texcoordvelocity[i][1] * 6, anim_data.texcoordvelocity[i][2] * 6)
 			else
 				self:texcoordvelocity(anim_data.texcoordvelocity[i][1], anim_data.texcoordvelocity[i][2])

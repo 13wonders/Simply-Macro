@@ -15,6 +15,7 @@ local delay = 0
 -- variables for Macro style adjustments
 local strobescreens = {"ScreenAfterSelectProfile","ScreenSelectPlayMode","ScreenSelectPlayMode2","ScreenSelectStyle","ScreenSelectColor"}
 local counter = 1
+local speedswitch = false
 
 local af1 = Def.ActorFrame{
 	InitCommand=function(self)
@@ -56,10 +57,13 @@ local af2 = Def.ActorFrame{
 			delay = 0.107142 -- 1/4 of a beat in a 140 BPM song
 			-- beat counter for animation speed
 			if counter < 4 then counter = counter + 1 else counter = 1 end
-			self:queuecommand("UpdateSpeed")
+			speedswitch = true
 		else
 			delay = 0.428571
+			speedswitch = false
 		end
+
+		self:queuecommand("UpdateSpeed")
 
 		index = index + 1
 		self:queuecommand("NewColor"):sleep(delay):queuecommand("Loop")
@@ -98,7 +102,7 @@ for i=1,25 do
 		-- Macro style: new loop function for speeding up animations
 		UpdateSpeedCommand=function(self)
 			-- use faster animation for half a beat, then back to normal animation for the other half
-			if ((counter == 2) or (counter == 3)) then
+			if (speedswitch == true) and ((counter == 2) or (counter == 3)) then
 				self:texcoordvelocity(anim_data.tv_x[i]*3, anim_data.tv_y[i]*3)
 			else
 				self:texcoordvelocity(anim_data.tv_x[i], anim_data.tv_y[i])
