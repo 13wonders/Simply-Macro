@@ -12,6 +12,10 @@ local index = SL.Global.ActiveColorIndex
 -- change this variable in the AF's OnCommand so that color-shifts tween appropriately
 local delay = 0
 
+-- variables for Macro style adjustments
+local strobescreens = {"ScreenAfterSelectProfile","ScreenSelectPlayMode","ScreenSelectPlayMode2","ScreenSelectStyle","ScreenSelectColor"}
+local counter = 1
+
 local af1 = Def.ActorFrame{
 	InitCommand=function(self)
 		self:visible( ThemePrefs.Get("RainbowMode") )
@@ -32,7 +36,11 @@ local af2 = Def.ActorFrame{
 	AppearCommand=function(self) self:linear(1):diffusealpha(1):queuecommand("Loop") end,
 
 	OnCommand=function(self)
-		delay = 0.7
+		if GetThemePref("VisualTheme") == "Macro" then
+			delay = 0.428571 -- This delay is the length of a beat in a 140 BPM song
+		else
+			delay = 0.7
+		end
 		self:bob():effectmagnitude(0,0,50):effectperiod(12)
 	end,
 	BackgroundImageChangedMessageCommand=function(self)
@@ -43,6 +51,16 @@ local af2 = Def.ActorFrame{
 	end,
 
 	LoopCommand=function(self)
+		-- Macro style: make colors change each beat and adjust animation speed to the beat
+		if (GetThemePref("VisualTheme") == "Macro") and FindInTable(SCREENMAN:GetTopScreen():GetName(), strobescreens) then
+			delay = 0.107142 -- 1/4 of a beat in a 140 BPM song
+			-- beat counter for animation speed
+			if counter < 4 then counter = counter + 1 else counter = 1 end
+			self:queuecommand("UpdateSpeed")
+		else
+			delay = 0.428571
+		end
+
 		index = index + 1
 		self:queuecommand("NewColor"):sleep(delay):queuecommand("Loop")
 	end
@@ -75,7 +93,18 @@ for i=1,25 do
 			self:linear(delay)
 			:diffuse( GetHexColor(index+anim_data.color_add[i], true))
 			:diffusealpha(anim_data.a[i])
+		end,
+
+		-- Macro style: new loop function for speeding up animations
+		UpdateSpeedCommand=function(self)
+			-- use faster animation for half a beat, then back to normal animation for the other half
+			if ((counter == 2) or (counter == 3)) then
+				self:texcoordvelocity(anim_data.tv_x[i]*3, anim_data.tv_y[i]*3)
+			else
+				self:texcoordvelocity(anim_data.tv_x[i], anim_data.tv_y[i])
+			end
 		end
+
 	}
 end
 
