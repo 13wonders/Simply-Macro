@@ -61,6 +61,7 @@ local groups = GetGroups()
 --	Trace(line)
 -- end
 
+-- ITGGroupCheck() is called at ScreenGameplay in.
 -- The following function checks whether the current song's group is NOT in ITG-Sync-Groups.txt.
 -- If it is NOT "ITG," ITGGroupCheck() will set GlobalOffsetSeconds as DDROffset, divided by 1000, because DDROffset is in milliseconds, whereas GlobalOffsetSeconds is in seconds.
 -- Otherwise, it will set GlobalOffsetSeconds as DDROffset (again, divided by 1000) minus 0.009. (See 99 SL-ThemePrefs.lua.)
@@ -74,4 +75,16 @@ ITGGroupCheck = function()
     PREFSMAN:SetPreference('GlobalOffsetSeconds',DDROffsetSeconds-0.009)
 --	SM(GAMESTATE:GetCurrentSong():GetGroupName().." is the current group. GlobalOffsetSeconds is "..DDROffsetSeconds.." minus 0.009, which is "..PREFSMAN:GetPreference('GlobalOffsetSeconds'))
   end
+end
+
+
+-- ResetToDDROffset() is called at ScreenSelectMusic in (and ScreenSelectMusicCasual in).
+-- It's used for resetting GlobalOffsetSeconds back to the DDROffset before/between/after songs.
+-- Without this, if you play an "ITG" song in Simply Macro, and then switch themes, your GlobalOffsetSeconds will remain at the "ITG" offset.
+-- This can be a problem particularly if your Simply Macro prefs get reset, and the default DDROffset gets set to your most recent GlobalOffsetSeconds.
+-- This doesn't switch things back if a user closes the game in the middle of a song, but I'm not sure there's anything that can be done about that.
+
+ResetToDDROffset = function()
+	local DDROffsetSeconds = GetThemePref('DDROffset')/1000
+	PREFSMAN:SetPreference('GlobalOffsetSeconds',DDROffsetSeconds)
 end

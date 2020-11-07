@@ -38,7 +38,6 @@ Step artists/simfile creators sync songs differently. Many sync to a null offset
 
 ## Potential features/changes
 - [ ] Enable user-configurable custom global offset for a separate list of song groups
-- [ ] Automatically switch GlobalOffsetSeconds back to the DDR Offset (if it isn't already) when switching to a different theme
 - [ ] Alternative rainbow/color mode preferences
 - [ ] Fancier title screen/revamped attract loop
 - [ ] DDR-specific judgment graphics that match Wendy and/or are similar to Love
